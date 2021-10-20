@@ -14,6 +14,11 @@ class TOONTANKS_API APawnBase : public APawn
 public:
 	APawnBase();
 
+protected:
+	void RotateTurretTowards(FVector LookAtLocation);
+	void Fire();
+	virtual void HandleDestruction();
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCapsuleComponent* CapsuleComponent;
