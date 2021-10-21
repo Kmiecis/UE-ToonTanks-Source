@@ -16,7 +16,7 @@ void APawnTank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerController = Cast<APlayerController>(GetController());
+	PlayerController = Cast<APlayerController>(Controller);
 }
 
 void APawnTank::HandleDestruction()

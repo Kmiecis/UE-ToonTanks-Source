@@ -1,13 +1,14 @@
 #include "PawnBase.h"
 
 #include "Components/CapsuleComponent.h"
+#include "ToonTanks/Actors/ProjectileBase.h"
 
 APawnBase::APawnBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
-	RootComponent = CapsuleComponent;
+	CapsuleCollider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	RootComponent = CapsuleCollider;
 
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
 	BaseMesh->SetupAttachment(RootComponent);
@@ -21,16 +22,23 @@ APawnBase::APawnBase()
 
 void APawnBase::RotateTurretTowards(FVector LookAtLocation)
 {
-	auto TurretLocation = TurretMesh->GetComponentLocation();
-	auto TargetLocation = FVector(LookAtLocation.X, LookAtLocation.Y, TurretLocation.Z);
-	auto TurretRotation = FVector(TargetLocation - TurretLocation).Rotation();
+	FVector TurretLocation = TurretMesh->GetComponentLocation();
+	FVector TargetLocation = FVector(LookAtLocation.X, LookAtLocation.Y, TurretLocation.Z);
+	FRotator TurretRotation = FVector(TargetLocation - TurretLocation).Rotation();
 
 	TurretMesh->SetWorldRotation(TurretRotation);
 }
 
 void APawnBase::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("FIRE"));
+	if (ProjectileClass != nullptr)
+	{
+		FVector ProjectileLocation = ProjectileSpawnPoint->GetComponentLocation();
+		FRotator ProjectileRotation = ProjectileSpawnPoint->GetComponentRotation();
+		
+		AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, ProjectileLocation, ProjectileRotation);
+		TempProjectile->SetOwner(this);
+	}
 }
 
 void APawnBase::HandleDestruction()
