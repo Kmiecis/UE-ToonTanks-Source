@@ -13,7 +13,7 @@ void APawnTurret::Tick(float DeltaTime)
 
 	if (PlayerTank != nullptr && GetDistanceToPlayer() <= FireRange)
 	{
-		auto PlayerLocation = PlayerTank->GetActorLocation();
+		FVector PlayerLocation = PlayerTank->GetActorLocation();
 		RotateTurretTowards(PlayerLocation);
 	}
 }
@@ -22,16 +22,18 @@ void APawnTurret::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto& TimerManager = GetWorld()->GetTimerManager();
+	FTimerManager& TimerManager = GetWorld()->GetTimerManager();
 	TimerManager.SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
 
-	auto* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	PlayerTank = Cast<APawnTank>(PlayerPawn);
 }
 
 void APawnTurret::HandleDestruction()
 {
 	Super::HandleDestruction();
+
+	Destroy();
 }
 
 void APawnTurret::CheckFireCondition()

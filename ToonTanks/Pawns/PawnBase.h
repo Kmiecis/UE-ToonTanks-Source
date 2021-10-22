@@ -14,11 +14,11 @@ class TOONTANKS_API APawnBase : public APawn
 
 public:
 	APawnBase();
+	virtual void HandleDestruction();
 
 protected:
 	void RotateTurretTowards(FVector LookAtLocation);
 	void Fire();
-	virtual void HandleDestruction();
 
 private:
 	// Components

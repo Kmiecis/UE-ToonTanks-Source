@@ -22,6 +22,8 @@ void APawnTank::BeginPlay()
 void APawnTank::HandleDestruction()
 {
 	Super::HandleDestruction();
+
+	Destroy();
 }
 
 void APawnTank::Tick(float DeltaTime)
@@ -33,10 +35,10 @@ void APawnTank::Tick(float DeltaTime)
 
 	if (PlayerController != nullptr)
 	{
-		auto TraceHitResult = FHitResult();
+		FHitResult TraceHitResult = FHitResult();
 		if (PlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, TraceHitResult))
 		{
-			auto HitLocation = TraceHitResult.ImpactPoint;
+			FVector HitLocation = TraceHitResult.ImpactPoint;
 			RotateTurretTowards(HitLocation);
 		}
 	}
@@ -60,7 +62,7 @@ void APawnTank::CalculateRotateInput(float Value)
 {
 	float DeltaTime = GetWorld()->DeltaTimeSeconds;
 	float RotateAmount = Value * RotateSpeed * DeltaTime;
-	auto Rotation = FRotator(0, RotateAmount, 0);
+	FRotator Rotation = FRotator(0, RotateAmount, 0);
 	RotationDirection = FQuat(Rotation);
 }
 

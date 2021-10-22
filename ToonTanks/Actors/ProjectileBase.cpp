@@ -5,6 +5,8 @@
 
 AProjectileBase::AProjectileBase()
 {
+	PrimaryActorTick.bCanEverTick = false;
+
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	RootComponent = ProjectileMesh;
 
