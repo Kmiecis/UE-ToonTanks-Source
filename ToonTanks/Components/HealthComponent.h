@@ -24,6 +24,5 @@ private:
 	float DefaultHealth = 100.0f;
 
 	float Health = 0.0f;
-
 	ATankGameModeBase* TankGameMode;
 };

@@ -19,11 +19,19 @@ void APawnTank::BeginPlay()
 	PlayerController = Cast<APlayerController>(Controller);
 }
 
+bool APawnTank::GetIsPlayerAlive()
+{
+	return IsPlayerAlive;
+}
+
 void APawnTank::HandleDestruction()
 {
 	Super::HandleDestruction();
 
-	Destroy();
+	IsPlayerAlive = false;
+
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
 }
 
 void APawnTank::Tick(float DeltaTime)

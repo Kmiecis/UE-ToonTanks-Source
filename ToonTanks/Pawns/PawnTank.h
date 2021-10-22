@@ -17,6 +17,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void HandleDestruction() override;
+	bool GetIsPlayerAlive();
 
 protected:
 	virtual void BeginPlay() override;
@@ -34,13 +35,14 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* CameraComponent;
 
-	APlayerController* PlayerController;
-
-	FVector MoveDirection;
-	FQuat RotationDirection;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MoveSpeed = 100.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float RotateSpeed = 100.0f;
+
+	APlayerController* PlayerController;
+	bool IsPlayerAlive = true;
+
+	FVector MoveDirection;
+	FQuat RotationDirection;
 };

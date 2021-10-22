@@ -30,6 +30,5 @@ private:
 	float FireRange = 500.0f;
 
 	FTimerHandle FireRateTimerHandle;
-
 	APawnTank* PlayerTank;
 };

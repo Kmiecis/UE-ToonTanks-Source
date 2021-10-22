@@ -38,7 +38,7 @@ void APawnTurret::HandleDestruction()
 
 void APawnTurret::CheckFireCondition()
 {
-	if (PlayerTank != nullptr && GetDistanceToPlayer() <= FireRange)
+	if (PlayerTank != nullptr && PlayerTank->GetIsPlayerAlive() && GetDistanceToPlayer() <= FireRange)
 	{
 		Fire();
 	}
